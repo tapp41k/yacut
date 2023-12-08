@@ -25,7 +25,7 @@ def add_link():
                                                                 custom_short):
             raise APIUsageError('Указано недопустимое имя для короткой ссылки')
         if URLMap.query.filter_by(short=custom_short).first():
-            raise APIUsageError(f'Имя "{custom_short}" уже занято.')
+            raise APIUsageError('Предложенный вариант короткой ссылки уже существует.')
     else:
         custom_short = get_unique_short_id()
     sortened_link = URLMap(
