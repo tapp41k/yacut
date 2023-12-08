@@ -14,7 +14,7 @@ def index_view():
     if form.validate_on_submit():
         custom_id = form.custom_id.data
         if URLMap.query.filter_by(short=custom_id).first():
-            flash(f'Имя {custom_id} уже занято!')
+            flash('Предложенный вариант короткой ссылки уже существует.')
             return render_template('yacut.html', form=form)
         if not custom_id:
             custom_id = get_unique_short_id()
