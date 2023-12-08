@@ -4,7 +4,7 @@ from flask import flash, redirect, render_template
 
 from . import app, db
 from .forms import LinkForm
-from .models import URL_map
+from .models import URLMap
 from .utils import get_unique_short_id
 
 
@@ -13,12 +13,12 @@ def index_view():
     form = LinkForm()
     if form.validate_on_submit():
         custom_id = form.custom_id.data
-        if URL_map.query.filter_by(short=custom_id).first():
+        if URLMap.query.filter_by(short=custom_id).first():
             flash(f'Имя {custom_id} уже занято!')
             return render_template('yacut.html', form=form)
         if not custom_id:
             custom_id = get_unique_short_id()
-        sortened_link = URL_map(
+        sortened_link = URLMap(
             original=form.original_link.data,
             short=custom_id
         )
@@ -31,5 +31,5 @@ def index_view():
 
 @app.route('/<string:short>')
 def redirect_view(short):
-    original_url = URL_map.query.filter_by(short=short).first_or_404()
+    original_url = URLMap.query.filter_by(short=short).first_or_404()
     return redirect(original_url.original)

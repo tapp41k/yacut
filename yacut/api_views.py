@@ -7,7 +7,7 @@ from settings import REGEX_PATTERN, USER_LINK_LENGHT
 
 from . import app, db
 from .error_handlers import APIUsageError
-from .models import URL_map
+from .models import URLMap
 from .utils import get_unique_short_id
 
 
@@ -24,11 +24,11 @@ def add_link():
         if len(custom_short) > USER_LINK_LENGHT or not re.match(REGEX_PATTERN,
                                                                 custom_short):
             raise APIUsageError('Указано недопустимое имя для короткой ссылки')
-        if URL_map.query.filter_by(short=custom_short).first():
+        if URLMap.query.filter_by(short=custom_short).first():
             raise APIUsageError(f'Имя "{custom_short}" уже занято.')
     else:
         custom_short = get_unique_short_id()
-    sortened_link = URL_map(
+    sortened_link = URLMap(
         original=original,
         short=custom_short
     )
@@ -39,7 +39,7 @@ def add_link():
 
 @app.route('/api/id/<string:short>/', methods=['GET'])
 def get_original_url(short):
-    original_url = URL_map.query.filter_by(short=short).first()
+    original_url = URLMap.query.filter_by(short=short).first()
     if not original_url:
         raise APIUsageError('Указанный id не найден', HTTPStatus.NOT_FOUND)
     return jsonify({'url': original_url.original}), HTTPStatus.OK

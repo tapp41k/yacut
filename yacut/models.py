@@ -6,7 +6,7 @@ from settings import USER_LINK_LENGHT
 from yacut import db
 
 
-class URL_map(db.Model):
+class URLMap(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     original = db.Column(db.String(), index=True, nullable=False)
     short = db.Column(db.String(USER_LINK_LENGHT), index=True, unique=True,
