@@ -61,7 +61,7 @@ python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## 📌 Не забудьте создать файл `.env` и наполнить его:
+- 📌 Не забудьте создать файл `.env` и наполнить его:
 ```
 DATABASE_URI=<dialect+driver://username:password@host:port/database>
 FLASK_APP=yacut
